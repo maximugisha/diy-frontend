@@ -1,3 +1,11 @@
+import { Metadata } from 'next';
+ 
+export const metadata: Metadata = {
+  title: 'Kids Diy Platform',
+  description: 'The one center for the nextgen kids in tech.',
+  metadataBase: new URL('https://creativechildf.org'),
+};
+
 import '@/app/ui/global.css';
 import { inter } from '@/app/ui/fonts';
 
