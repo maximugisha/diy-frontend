@@ -10,7 +10,7 @@ const nextConfig = {
         },
         {
             protocol: 'https',
-            hostname: 'cranecloud.io',
+            hostname: 'kids-49ee77c1-f112-45e6-9897.renu-01.cranecloud.io',
             pathname: '/media/**',
           },
       ],
