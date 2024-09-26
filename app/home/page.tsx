@@ -9,6 +9,8 @@ interface Post {
   id: number;
   title: string;
   content: string;
+  likes: number;
+  created_since: string;
   images: string[]; // Array of image URLs
   user: {
     username: string;
@@ -80,7 +82,7 @@ export default function Page() {
               <div className="flex-1">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
-                    <h2 className="text-sm font-semibold">@{post.user.username}</h2>
+                    <h2 className="text-sm font-semibold">{post.user.username}</h2>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="w-4 h-4 text-blue-500"
@@ -91,9 +93,9 @@ export default function Page() {
                       <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4" />
                     </svg>
-                    <p className="text-xs text-gray-500">via {post.user.organization}</p>
+                    <p className="text-xs text-gray-500">@{post.user.organization}</p>
                   </div>
-                  <span className="text-xs text-gray-500">2h</span>
+                  <span className="text-xs text-gray-500">{post.created_since}</span>
                 </div>
 
                 <p className="mt-2 text-sm">{post.content}</p>
@@ -125,7 +127,7 @@ export default function Page() {
                   </button>
                   <button className="flex items-center space-x-1 hover:text-red-500">
                     <HeartIcon className="w-5 h-5" />
-                    <span className="text-xs">Like</span>
+                    <span className="text-xs">{post.likes}</span>
                   </button>
                 </div>
               </div>
