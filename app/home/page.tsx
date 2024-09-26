@@ -1,8 +1,8 @@
 'use client';
 import { CogIcon, KeyIcon, HeartIcon } from '@heroicons/react/24/outline';
-
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import Cookies from 'js-cookie'; // Import js-cookie to retrieve the token
 
 // Define the Post interface
 interface Post {
@@ -26,8 +26,16 @@ export default function Page() {
 
   useEffect(() => {
     const fetchPosts = async () => {
+      const accessToken = Cookies.get('accessToken'); // Retrieve the access token
+
       try {
-        const res = await fetch('/api/posts');
+        const res = await fetch('/api/posts', {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`, // Include the token in the headers
+          },
+        });
+
         if (!res.ok) {
           const { error } = await res.json();
           throw new Error(error || 'Failed to fetch posts');
@@ -36,7 +44,7 @@ export default function Page() {
         const { data } = await res.json();
         setPosts(data);
       } catch (error: any) {
-        setError(error.message);  // Capture and set error message
+        setError(error.message); // Capture and set error message
       } finally {
         setLoading(false);
       }
@@ -57,7 +65,6 @@ export default function Page() {
 
   return (
     <div className="max-w-2xl mx-auto p-4">
-      <h1 className="text-xl font-bold mb-6">Posts</h1>
       <ul>
         {posts.map((post) => (
           <li key={post.id} className="border-b border-gray-300 py-6">
