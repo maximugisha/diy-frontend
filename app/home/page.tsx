@@ -56,7 +56,7 @@ export default function Page() {
   }, []);
 
   if (loading) return <p>Loading...</p>;
-
+  console.log(posts)
   const openModal = (image: string) => {
     setSelectedImage(image); // Set the clicked image as the selected one
   };

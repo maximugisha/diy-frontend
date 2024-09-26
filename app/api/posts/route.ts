@@ -1,8 +1,4 @@
-// Import any necessary types or libraries here
-// Remove the import of js-cookie
-// import Cookies from 'js-cookie'; // No longer needed
 
-// Define the type for the Post data
 interface Post {
   id: number;
   title: string;

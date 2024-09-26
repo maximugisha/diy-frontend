@@ -6,7 +6,6 @@ import AcmeLogo from '@/app/ui/acme-logo';
 import { PowerIcon } from '@heroicons/react/24/outline';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
-
 export default function SideNav() {
   const router = useRouter(); // Hook to navigate programmatically
 
