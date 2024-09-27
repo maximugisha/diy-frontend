@@ -1,10 +1,9 @@
 'use client';
-import { CogIcon, KeyIcon, HeartIcon } from '@heroicons/react/24/outline';
+import { CogIcon, KeyIcon, HeartIcon, PhotoIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import Cookies from 'js-cookie'; // Import js-cookie to retrieve the token
+import Cookies from 'js-cookie';
 
-// Define the Post interface
 interface Post {
   id: number;
   title: string;
@@ -24,17 +23,19 @@ export default function Page() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [content, setContent] = useState('');
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL as string;
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const accessToken = Cookies.get('accessToken'); // Retrieve the access token
+      const accessToken = Cookies.get('accessToken');
 
       try {
         const res = await fetch('/api/posts', {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${accessToken}`, // Include the token in the headers
+            'Authorization': `Bearer ${accessToken}`,
           },
         });
 
@@ -46,7 +47,7 @@ export default function Page() {
         const { data } = await res.json();
         setPosts(data);
       } catch (error: any) {
-        setError(error.message); // Capture and set error message
+        setError(error.message);
       } finally {
         setLoading(false);
       }
@@ -56,17 +57,151 @@ export default function Page() {
   }, []);
 
   if (loading) return <p>Loading...</p>;
-  console.log(posts)
+
   const openModal = (image: string) => {
-    setSelectedImage(image); // Set the clicked image as the selected one
+    setSelectedImage(image);
   };
 
   const closeModal = () => {
-    setSelectedImage(null); // Close modal by setting selected image to null
+    setSelectedImage(null);
+  };
+
+  // Handle content input change
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setContent(e.target.value);
+  };
+
+  // Handle image selection for multiple images
+  const handleImageSelection = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    setImageFiles(files);
+  };
+
+  // Upload images to the server and get the single UUID returned
+  const uploadImages = async (): Promise<string | null> => {
+    const accessToken = Cookies.get('accessToken');
+    const formData = new FormData();
+
+    imageFiles.forEach((file) => formData.append('images', file)); // Append all files to the form
+
+    const response = await fetch(`${baseUrl}/api/common/upload/`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+      },
+      body: formData,
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      return data.id; // Single UUID returned
+    } else {
+      console.error('Error uploading images:', data);
+      return null;
+    }
+  };
+
+  // Handle post submission
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!content && imageFiles.length === 0) {
+      alert('Please enter some content or upload at least one image.');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      // Upload the images and get the single UUID returned
+      const uploadedImageId = await uploadImages();
+
+      if (!uploadedImageId) {
+        throw new Error('Image upload failed');
+      }
+
+      // Prepare the payload
+      const payload = {
+        content,
+        images: uploadedImageId, // Single UUID for the group of uploaded images
+      };
+
+      const accessToken = Cookies.get('accessToken');
+      const response = await fetch(`${baseUrl}/api/posts/posts/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        const newPost = {
+          id: data.id,
+          title: data.title,
+          content: data.content,
+          likes: 0, // You can start with 0 likes for a new post
+          created_since: 'Just now', // You can handle this as you like
+          images: data.images || [], // Array of image URLs
+          user: {
+            username: data.user.username,
+            profile_picture: data.user.profile_picture,
+            organization: data.user.organization,
+          },
+        };
+        setPosts([newPost, ...posts]); // Append new post on top of the posts list
+        setContent(''); // Clear content
+        setImageFiles([]); // Clear image selection
+      } else {
+        console.error('Error creating post:', data);
+      }
+    } catch (error) {
+      console.error('Post creation failed:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="max-w-2xl mx-auto p-4">
+      {/* Create Post Form */}
+      <div className="bg-white p-4 rounded-lg shadow-md mb-6">
+        <form onSubmit={handleSubmit} className="flex items-center space-x-4">
+          <textarea
+            className="flex-grow p-2 border border-gray-300 rounded-lg"
+            placeholder="What's on your mind?"
+            value={content}
+            onChange={handleContentChange}
+          />
+
+          <label className="flex items-center cursor-pointer space-x-2">
+            <PhotoIcon className="w-6 h-6 text-gray-600" />
+            <span className="text-sm text-gray-600"></span>
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              className="hidden"
+              onChange={handleImageSelection}
+            />
+          </label>
+
+          {imageFiles.length > 0 && (
+            <p className="text-sm text-gray-500">{imageFiles.length} image(s) selected</p>
+          )}
+
+          <button
+            type="submit"
+            className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 disabled:opacity-50"
+            disabled={loading}
+          >
+            {loading ? 'Posting...' : 'Post'}
+          </button>
+        </form>
+      </div>
+
+      {/* Posts List */}
       <ul>
         {posts.map((post) => (
           <li key={post.id} className="border-b border-gray-300 py-6">
@@ -101,19 +236,19 @@ export default function Page() {
                 <p className="mt-2 text-sm">{post.content}</p>
 
                 {post.images.length > 0 && (
-                  <div className="mt-4 grid grid-cols-3 gap-2">
-                    {post.images.map((image, index) => (
+                  <div className="mt-4 grid grid-cols-2 gap-1"> {/* Adjusted gap to a smaller value */}
+                  {post.images.map((image, index) => (
+                    <div className="relative w-48 h-48 overflow-hidden" key={index}> {/* Container for each image */}
                       <Image
-                        key={index}
                         src={baseUrl + image}
                         alt={`Image ${index + 1} for post ${post.id}`}
-                        width={200}
-                        height={200}
-                        className="cursor-pointer rounded-lg"
-                        onClick={() => openModal(baseUrl + image)} // Click event to open modal
+                        layout="fill" // This allows the image to fill the parent container
+                        className="cursor-pointer rounded-lg object-cover"
+                        onClick={() => openModal(baseUrl + image)}
                       />
-                    ))}
-                  </div>
+                    </div>
+                  ))}
+                </div>
                 )}
 
                 <div className="flex justify-between mt-4 text-gray-500">
