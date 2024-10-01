@@ -56,7 +56,7 @@ export default function Page() {
     fetchPosts();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>Loading..</p>;
 
   const openModal = (image: string) => {
     setSelectedImage(image);
