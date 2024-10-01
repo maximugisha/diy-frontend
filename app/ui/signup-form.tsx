@@ -18,7 +18,7 @@ export default function LoginForm() {
     const router = useRouter();
 
     const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
-        const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL as string;
+        const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL as string || 'http://147.182.223.147:8000';
         const endpoint = '/api/account/signup/';
         const url = `${baseUrl}${endpoint}`;
         console.log(url);
