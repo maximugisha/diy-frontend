@@ -62,7 +62,7 @@ jobs:
             cd diy-frontend
             sudo docker rm -f diy-frontend
             sudo docker pull maximugisha/diy-frontend:latest
-            docker run -d --env-file .env -p 3000:3000/tcp -v node_modules:/app/node_modules --name diy-frontend maximugisha/diy-frontend:latest
+            sudo docker run -d --env-file .env -p 3000:3000/tcp -v node_modules:/app/node_modules --name diy-frontend maximugisha/diy-frontend:latest
           
 
              
