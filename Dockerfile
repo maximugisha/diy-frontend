@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package.json yarn.lock* package-lock.json* ./
 
 # Install dependencies, separate to enable layer caching
-RUN npm install
+RUN npm install --force
 
 # Copy all project files (after dependencies, so this layer is only invalidated when files change)
 COPY . .
