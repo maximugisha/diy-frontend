@@ -9,12 +9,8 @@ const nextConfig = {
       {
         protocol: 'http',
         hostname: '147.182.223.147',
-        pathname: '/media/**', // Path to the images
-      },
-      {
-        protocol: 'https',
-        hostname: '147.182.223.147',
-        pathname: '/media/**',
+        port: '8000', // Add the port number if it's non-default (optional for port 80)
+        pathname: '/media/**', // Match all media files in this folder
       },
     ],
   },
