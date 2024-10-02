@@ -14,7 +14,7 @@ RUN npm install --force
 COPY . .
 
 # Build the Next.js app
-RUN npm build
+RUN npm run build
 
 # Stage 2: Production image with the built app
 FROM node:20-alpine AS runner
