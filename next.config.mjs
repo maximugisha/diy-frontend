@@ -1,20 +1,19 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-    images: {
-      remotePatterns: [
-        {
-          protocol: 'http',
-          hostname: '127.0.0.1',
-          pathname: '/media/**', // Path to the images
-        },
-        {
-            protocol: 'https',
-            hostname: 'kids-49ee77c1-f112-45e6-9897.renu-01.cranecloud.io',
-            pathname: '/media/**',
-          },
-      ],
-    },
-  };
+  env: {
+    NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: '147.182.223.147',
+        port: '8000', // Add the port number if it's non-default (optional for port 80)
+        pathname: '/media/**', // Match all media files in this folder
+      },
+    ],
+  },
+};
 
 export default nextConfig;

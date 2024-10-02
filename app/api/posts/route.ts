@@ -7,7 +7,7 @@ interface Post {
 
 export async function GET(request: Request) {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL as string;
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL as string || 'http://147.182.223.147:8000';
     const endpoint = '/api/posts/posts/';
     const url = `${baseUrl}${endpoint}`;
 
