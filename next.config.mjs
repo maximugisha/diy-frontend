@@ -7,8 +7,8 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: '147.182.223.147',
+        protocol: 'https',
+        hostname: 'maxicodes.com',
         port: '8000', // Add the port number if it's non-default (optional for port 80)
         pathname: '/media/**', // Match all media files in this folder
       },
