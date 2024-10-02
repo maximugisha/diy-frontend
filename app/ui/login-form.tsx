@@ -16,8 +16,10 @@ export default function LoginForm() {
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL as string;
+    console.log("Base URL:", baseUrl); // Add this line
     const endpoint = '/api/token/';
-    const url = `${baseUrl}${endpoint}`;
+    const url = baseUrl + endpoint;
+    console.log("Full URL:", url); // Add this line
     e.preventDefault();
     setError(''); // Reset the error message
     try {
