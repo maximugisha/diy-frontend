@@ -25,7 +25,7 @@ export default function Page() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [content, setContent] = useState('');
   const [imageFiles, setImageFiles] = useState<File[]>([]);
-  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL as string || 'https://maxicodes.com:8000';
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL as string;
 
   useEffect(() => {
     const fetchPosts = async () => {

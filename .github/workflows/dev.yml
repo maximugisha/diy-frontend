@@ -3,7 +3,7 @@ name: Build and Push Docker Image
 on:
   push:
     branches:
-      - dev
+      #- dev
       - main  # Trigger workflow on push to the 'main' branch
 #   pull_request:
 #     branches:
