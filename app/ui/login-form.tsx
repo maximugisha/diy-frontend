@@ -16,6 +16,8 @@ export default function LoginForm() {
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL as string;
+    const uri = process.env.API_URL;
+    console.log("Base URi:", uri);
     console.log("Base URL:", baseUrl); // Add this line
     const endpoint = '/api/token/';
     const url = baseUrl + endpoint;
