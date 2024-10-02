@@ -8,13 +8,14 @@ WORKDIR /app
 COPY package.json yarn.lock* package-lock.json* ./
 
 # Install dependencies, separate to enable layer caching
+RUN npm install -g pnpm
 RUN npm install --force
 
 # Copy all project files (after dependencies, so this layer is only invalidated when files change)
 COPY . .
 
 # Build the Next.js app
-RUN pnpm run build
+RUN pnpm build
 
 # Stage 2: Production image with the built app
 FROM node:20-alpine AS runner
