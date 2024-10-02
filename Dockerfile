@@ -10,8 +10,13 @@ COPY package.json yarn.lock* package-lock.json* ./
 # Install dependencies, separate to enable layer caching
 RUN npm install --force
 
+VOLUME /app/node_modules
+
 # Copy all project files (after dependencies, so this layer is only invalidated when files change)
 COPY . .
+
+# Copy .env file from the context to the container
+COPY .env .env
 
 # Build the Next.js app
 RUN npm run build
