@@ -237,18 +237,19 @@ export default function Page() {
 
                 {post.images.length > 0 && (
                   <div className="mt-4 grid grid-cols-2 gap-1"> {/* Adjusted gap to a smaller value */}
-                  {post.images.map((image, index) => (
-                    <div className="relative w-48 h-48 overflow-hidden" key={index}> {/* Container for each image */}
-                      <Image
-                        src={baseUrl + image}
-                        alt={`Image ${index + 1} for post ${post.id}`}
-                        layout="fill" // This allows the image to fill the parent container
-                        className="cursor-pointer rounded-lg object-cover"
-                        onClick={() => openModal(baseUrl + image)}
-                      />
-                    </div>
-                  ))}
-                </div>
+                    {post.images.map((image, index) => (
+                      <div className="relative w-48 h-48 overflow-hidden" key={index}> {/* Container for each image */}
+                        <Image
+                          src={baseUrl + image}
+                          alt={`Image ${index + 1} for post ${post.id}`}
+                          fill // This allows the image to fill the parent container
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Define sizes based on the screen width
+                          className="cursor-pointer rounded-lg object-cover"
+                          onClick={() => openModal(baseUrl + image)}
+                        />
+                      </div>
+                    ))}
+                  </div>
                 )}
 
                 <div className="flex justify-between mt-4 text-gray-500">
@@ -278,8 +279,8 @@ export default function Page() {
             <Image
               src={selectedImage}
               alt="Selected Image"
-              width={500}
-              height={500}
+              width= {500}
+              height= {500}
               className="rounded-lg"
             />
             <button
