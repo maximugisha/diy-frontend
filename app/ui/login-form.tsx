@@ -15,7 +15,7 @@ export default function LoginForm() {
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL as string || 'https://maxicodes.com:8000';
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL as string;
     const endpoint = '/api/token/';
     const url = `${baseUrl}${endpoint}`;
     e.preventDefault();
