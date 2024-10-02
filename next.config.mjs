@@ -1,19 +1,6 @@
-/** @type {import('next').NextConfig} */
-
-const nextConfig = {
-  env: {
-    NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
-  },
+// next.config.js
+module.exports = {
   images: {
-    remotePatterns: [
-      {
-        protocol: 'http',
-        hostname: '147.182.223.147',
-        port: '8000', // Add the port number if it's non-default (optional for port 80)
-        pathname: '/media/**', // Match all media files in this folder
-      },
-    ],
+    domains: ['147.182.223.147'], // Add the domain or IP address of your backend server
   },
 };
-
-export default nextConfig;
