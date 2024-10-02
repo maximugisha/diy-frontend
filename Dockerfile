@@ -14,7 +14,7 @@ RUN npm install --force
 COPY . .
 
 # Build the Next.js app
-RUN npm run build
+RUN pnpm run build
 
 # Stage 2: Production image with the built app
 FROM node:20-alpine AS runner
@@ -35,4 +35,4 @@ ENV NODE_ENV=production
 EXPOSE 3000
 
 # Start the Next.js app
-CMD ["npm", "start"]
+CMD ["pnpm", "start"]
