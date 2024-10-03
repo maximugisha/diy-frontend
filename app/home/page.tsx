@@ -206,7 +206,7 @@ export default function Page() {
         {posts.map((post) => (
           <li key={post.id} className="border-b border-gray-300 py-6">
             <div className="flex space-x-4">
-              <Image
+              <img
                 src={baseUrl + post.user.profile_picture}
                 alt={"profile-pic"}
                 width={50}
@@ -274,7 +274,7 @@ export default function Page() {
       {selectedImage && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
           <div className="relative">
-            <Image
+            <img
               src={selectedImage}
               alt="Selected Image"
               width={500}

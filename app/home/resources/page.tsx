@@ -90,7 +90,7 @@ export default function ResourceTable() {
               <td className="p-3">{resource.type}</td>
               <td className="p-3">{resource.attachment_size} B</td>
               <td className="p-3 flex items-center space-x-2">
-                <Image
+                <img
                   src={baseUrl + resource.user.profile_picture}
                   alt="profile"
                   width={30}
