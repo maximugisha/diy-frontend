@@ -240,7 +240,7 @@ export default function Page() {
                     {post.images.map((image, index) => (
                       <div className="relative w-48 h-48 overflow-hidden" key={index}> {/* Container for each image */}
                         <Image
-                          src={baseUrl + image}
+                          src="https://api.maxicodes.com/media/uploads/Artboard_3_9f4d6po.png"
                           alt={`Image ${index + 1} for post ${post.id}`}
                           fill // This allows the image to fill the parent container
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Define sizes based on the screen width
