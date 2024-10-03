@@ -71,7 +71,7 @@ export default function Page() {
       </Link>
 
       <div className="flex items-center space-x-6">
-        <Image
+        <img
           src={`${baseUrl}${userprofile?.profile_picture}`}
           alt="Profile Picture"
           width={80}
