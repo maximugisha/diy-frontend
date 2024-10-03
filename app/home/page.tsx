@@ -239,12 +239,10 @@ export default function Page() {
                   <div className="mt-4 grid grid-cols-2 gap-1"> {/* Adjusted gap to a smaller value */}
                     {post.images.map((image, index) => (
                       <div className="relative w-48 h-48 overflow-hidden" key={index}> {/* Container for each image */}
-                        <Image
-                          src="https://api.maxicodes.com/media/uploads/Artboard_3_9f4d6po.png"
+                        <img
+                          src={baseUrl + image}
                           alt={`Image ${index + 1} for post ${post.id}`}
-                          fill // This allows the image to fill the parent container
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Define sizes based on the screen width
-                          className="cursor-pointer rounded-lg object-cover"
+                          className="w-full h-full object-cover cursor-pointer rounded-lg"
                           onClick={() => openModal(baseUrl + image)}
                         />
                       </div>
@@ -279,8 +277,8 @@ export default function Page() {
             <Image
               src={selectedImage}
               alt="Selected Image"
-              width= {500}
-              height= {500}
+              width={500}
+              height={500}
               className="rounded-lg"
             />
             <button
