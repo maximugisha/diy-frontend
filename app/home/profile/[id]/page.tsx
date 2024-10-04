@@ -32,8 +32,8 @@ interface Role {
 }
 
 interface Interest {
-  id: number;
-  name: string;
+    id: number;
+    name: string;
 }
 
 export default function EditProfile() {
@@ -69,7 +69,6 @@ export default function EditProfile() {
                 const { data } = result; // Adjust this if needed
 
                 setProfile(data);
-                setFormData(data); // Initialize form data
             } catch (error: any) {
                 setError(error.message);
             } finally {
@@ -124,27 +123,27 @@ export default function EditProfile() {
         };
 
         const fetchInterests = async () => {
-          const accessToken = Cookies.get('accessToken');
+            const accessToken = Cookies.get('accessToken');
 
-          try {
-              const res = await fetch(`${baseUrl}/api/account/interests`, {
-                  headers: {
-                      'Content-Type': 'application/json',
-                      'Authorization': `Bearer ${accessToken}`,
-                  },
-              });
+            try {
+                const res = await fetch(`${baseUrl}/api/account/interests`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`,
+                    },
+                });
 
-              if (!res.ok) {
-                  const { error } = await res.json();
-                  throw new Error(error || 'Failed to fetch interests');
-              }
+                if (!res.ok) {
+                    const { error } = await res.json();
+                    throw new Error(error || 'Failed to fetch interests');
+                }
 
-              const data = await res.json();
-              setInterests(data);
-          } catch (error: any) {
-              setError(error.message);
-          }
-      };
+                const data = await res.json();
+                setInterests(data);
+            } catch (error: any) {
+                setError(error.message);
+            }
+        };
 
         if (id) {
             fetchProfile();
@@ -153,6 +152,13 @@ export default function EditProfile() {
             fetchInterests();
         }
     }, [id]);
+
+    // New useEffect to update formData when profile data is fetched
+    useEffect(() => {
+        if (profile) {
+            setFormData(profile);
+        }
+    }, [profile]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -256,7 +262,6 @@ export default function EditProfile() {
                             onChange={handleInterestsChange}
                             className="mt-1 block w-full p-2 border border-gray-300 rounded"
                         >
-                            {/* Replace with dynamic options */}
                             {interests.map(interest => (
                                 <option key={interest.id} value={interest.id}>{interest.name}</option>
                             ))}
@@ -270,6 +275,7 @@ export default function EditProfile() {
                             onChange={handleOrganizationChange}
                             className="mt-1 block w-full p-2 border border-gray-300 rounded"
                         >
+                            <option value="" disabled>Select Organization</option>
                             {organizations.map(org => (
                                 <option key={org.id} value={org.id}>{org.name}</option>
                             ))}
@@ -283,6 +289,7 @@ export default function EditProfile() {
                             onChange={handleRoleChange}
                             className="mt-1 block w-full p-2 border border-gray-300 rounded"
                         >
+                            <option value="" disabled>Select Role</option>
                             {roles.map(role => (
                                 <option key={role.id} value={role.id}>{role.name}</option>
                             ))}
@@ -291,10 +298,10 @@ export default function EditProfile() {
                 </div>
                 <button
                     type="submit"
-                    className="mt-4 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    className="mt-4 inline-flex items-center px-4 py-2 bg-blue-600 text-white font-semibold rounded shadow hover:bg-blue-500"
                 >
-                    <PencilSquareIcon className="w-4 h-4 mr-2" />
-                    Save Changes
+                    <PencilSquareIcon className="h-5 w-5 mr-2" />
+                    Update Profile
                 </button>
             </form>
         </div>

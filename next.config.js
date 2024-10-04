@@ -8,8 +8,12 @@ module.exports = {
         hostname: 'api.maxicodes.com',
         pathname: '/media/**',
       },
+      {
+        protocol: 'http',
+        hostname: '127.0.0.1',
+        pathname: '/media/**',
+      },
     ],
-    domains: ['maxicodes.com', 'api.maxicodes.com'], // List your image domains
     path: '/_next/image',
     loader: 'default',
   },
