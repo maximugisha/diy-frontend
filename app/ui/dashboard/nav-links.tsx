@@ -22,7 +22,7 @@ const links = [
   { name: 'KidsLive', href: '/home/live', icon: UserGroupIcon },
   {
     name: 'Profile',
-    href: '/home/user',
+    href: '/home/profile',
     icon: UserIcon, // Assuming UserIcon from '@heroicons/react/24/outline'
   },
 ];

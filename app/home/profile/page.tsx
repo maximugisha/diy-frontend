@@ -64,7 +64,7 @@ export default function Page() {
     return (
         <div className="relative max-w-4xl mx-auto my-10 p-6 bg-white shadow-lg rounded-lg">
       {/* Edit button in the top-right corner */}
-      <Link href="/profile/edit">
+      <Link href={`/home/profile/${userprofile.id}`}>
         <button className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100">
           <PencilSquareIcon className="w-6 h-6 text-gray-500" />Edit
         </button>
