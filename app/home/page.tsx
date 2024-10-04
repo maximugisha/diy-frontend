@@ -236,9 +236,9 @@ export default function Page() {
                 <p className="mt-2 text-sm">{post.content}</p>
 
                 {post.images.length > 0 && (
-                  <div className="mt-4 grid grid-cols-2 gap-1"> {/* Adjusted gap to a smaller value */}
+                  <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"> {/* Adjusted gap to a smaller value */}
                     {post.images.map((image, index) => (
-                      <div className="relative w-48 h-48 overflow-hidden" key={index}> {/* Container for each image */}
+                      <div className="relative w-full aspect-w-1 aspect-h-1 overflow-hidden" key={index}> {/* Container for each image */}
                         <img
                           src={baseUrl + image}
                           alt={`Image ${index + 1} for post ${post.id}`}
