@@ -169,12 +169,12 @@ export default function EditProfile() {
     };
 
     const handleInterestsChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedOptions = Array.from(e.target.selectedOptions, option => parseInt(option.value, 10));
-        setFormData((prevData) => ({
-            ...(prevData as Profile), // Assert that prevData is of type Profile
-            interests: selectedOptions,
-        }));
-    };
+      const selectedOptions = Array.from(e.target.selectedOptions, option => parseInt(option.value, 10));
+      setFormData((prevData) => ({
+          ...(prevData as Profile), // Assert that prevData is of type Profile
+          interests: selectedOptions,
+      }));
+  };
 
     const handleOrganizationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setFormData((prevData) => ({
@@ -258,7 +258,7 @@ export default function EditProfile() {
                         <select
                             multiple
                             name="interests"
-                            value={formData?.interests || []}
+                            value={formData?.interests.map(String) || []}
                             onChange={handleInterestsChange}
                             className="mt-1 block w-full p-2 border border-gray-300 rounded"
                         >
