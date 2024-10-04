@@ -71,7 +71,8 @@ export default function Page() {
       }
 
       // Optionally, refresh the profile data or show a success message
-      router.push('/home/profile/'); // Reload the page to reflect changes
+      // router.replace('/home/profile/'); // Reload the page to reflect changes
+      window.location.reload();
 
 
     } catch (error) {
@@ -136,7 +137,7 @@ export default function Page() {
             alt="Profile Picture"
             width={80}
             height={80}
-            className="w-24 h-24 rounded-full object-cover aspect-square"
+            className="w-24 h-24 rounded-full object-cover aspect-square border-2 border-black"
           />
 
           {/* Pencil icon for editing profile picture */}
