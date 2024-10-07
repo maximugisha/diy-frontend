@@ -236,20 +236,31 @@ export default function Page() {
                 <p className="mt-2 text-sm">{post.content}</p>
 
                 {post.images.length > 0 && (
-                  <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"> {/* Adjusted gap to a smaller value */}
-                    {post.images.map((image, index) => (
-                      <div className="relative w-full aspect-w-1 aspect-h-1 overflow-hidden" key={index}> {/* Container for each image */}
-                        <img
-                          src={baseUrl + image}
-                          alt={`Image ${index + 1} for post ${post.id}`}
-                          className="w-full h-full object-cover cursor-pointer rounded-lg"
-                          onClick={() => openModal(baseUrl + image)}
-                        />
-                      </div>
-                    ))}
+                  <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+                    {post.images.map((media, index) => {
+                      const isVideo = media.endsWith('.mp4') || media.endsWith('.mov') || media.endsWith('.avi'); // Add more video formats as needed
+                      return (
+                        <div className="relative w-full aspect-w-1 aspect-h-1 overflow-hidden" key={index}>
+                          {isVideo ? (
+                            <video
+                              controls
+                              src={baseUrl + media}
+                              className="w-full h-full object-cover"
+
+                            />
+                          ) : (
+                            <img
+                              src={baseUrl + media}
+                              alt={`Image ${index + 1} for post ${post.id}`}
+                              className="w-full h-full object-cover"
+                              onClick={() => openModal(baseUrl + media)}
+                            />
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
-
                 <div className="flex justify-between mt-4 text-gray-500">
                   <button className="flex items-center space-x-1 hover:text-blue-500">
                     <CogIcon className="w-5 h-5" />
@@ -274,22 +285,33 @@ export default function Page() {
       {selectedImage && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
           <div className="relative">
-            <img
-              src={selectedImage}
-              alt="Selected Image"
-              width={500}
-              height={500}
-              className="rounded-lg"
-            />
+            {selectedImage.endsWith('.mp4') || selectedImage.endsWith('.mov') || selectedImage.endsWith('.avi') ? (
+              <video
+                controls
+                src={selectedImage}
+                width={500}
+                height={500}
+                className="rounded-lg"
+              />
+            ) : (
+              <img
+                src={selectedImage}
+                alt="Selected Media"
+                width={500}
+                height={500}
+                className="rounded-lg"
+              />
+            )}
             <button
               className="absolute top-2 right-2 text-white bg-gray-800 hover:bg-gray-700 rounded-full p-2"
-              onClick={closeModal} // Close modal button
+              onClick={closeModal}
             >
               X
             </button>
           </div>
         </div>
       )}
+
     </div>
   );
 }
