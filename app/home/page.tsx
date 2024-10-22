@@ -236,31 +236,32 @@ export default function Page() {
                 <p className="mt-2 text-sm">{post.content}</p>
 
                 {post.images.length > 0 && (
-                  <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-                    {post.images.map((media, index) => {
-                      const isVideo = media.endsWith('.mp4') || media.endsWith('.mov') || media.endsWith('.avi'); // Add more video formats as needed
-                      return (
-                        <div className="relative w-full aspect-w-1 aspect-h-1 overflow-hidden" key={index}>
-                          {isVideo ? (
-                            <video
-                              controls
-                              src={baseUrl + media}
-                              className="w-full h-full object-cover"
-
-                            />
-                          ) : (
-                            <img
-                              src={baseUrl + media}
-                              alt={`Image ${index + 1} for post ${post.id}`}
-                              className="w-full h-full object-cover"
-                              onClick={() => openModal(baseUrl + media)}
-                            />
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
+                    <div className={`mt-4 grid gap-4 ${post.images.length === 1 ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'}`}>
+                      {post.images.map((media, index) => {
+                        const isVideo = media.endsWith('.mp4') || media.endsWith('.mov') || media.endsWith('.avi') || media.endsWith('.mkv'); // Add more video formats as needed
+                        return (
+                            <div className="relative w-full aspect-w-16 aspect-h-9 overflow-hidden" key={index}>
+                              {isVideo ? (
+                                  <video
+                                      controls
+                                      src={baseUrl + media}
+                                      className="w-full h-full object-cover"
+                                  />
+                              ) : (
+                                  <img
+                                      src={baseUrl + media}
+                                      alt={`Image ${index + 1} for post ${post.id}`}
+                                      className="w-full h-full object-cover"
+                                      onClick={() => openModal(baseUrl + media)}
+                                  />
+                              )}
+                            </div>
+                        );
+                      })}
+                    </div>
                 )}
+
+
                 <div className="flex justify-between mt-4 text-gray-500">
                   <button className="flex items-center space-x-1 hover:text-blue-500">
                     <CogIcon className="w-5 h-5" />
