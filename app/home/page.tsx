@@ -180,7 +180,7 @@ export default function Page() {
             <span className="text-sm text-gray-600"></span>
             <input
               type="file"
-              accept="image/*"
+              accept="image/*, video/mp4, video/mov, video/avi"
               multiple
               className="hidden"
               onChange={handleImageSelection}
@@ -289,8 +289,6 @@ export default function Page() {
               <video
                 controls
                 src={selectedImage}
-                width={500}
-                height={500}
                 className="rounded-lg"
               />
             ) : (
