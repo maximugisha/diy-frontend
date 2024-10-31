@@ -5,7 +5,7 @@ module.exports = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'api.maxicodes.com',
+        hostname: 'api.kidsdiy.org',
         pathname: '/media/**',
       },
       {
