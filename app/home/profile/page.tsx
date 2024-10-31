@@ -114,6 +114,7 @@ export default function Page() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
   const userprofile = profile[0];
+  console.log(userprofile)
 
   return (
     <div className="relative max-w-4xl mx-auto my-10 p-6 bg-white shadow-lg rounded-lg">
